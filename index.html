@@ -1,0 +1,221 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎂 Happy Birthday! 🎉</title>
+
+    <link href="https://fonts.cdnfonts.com/css/romantic" rel="stylesheet">
+
+    <style>
+        @import url('https://fonts.cdnfonts.com/css/romantic');
+
+        body {
+            font-family: 'Romantic', sans-serif;
+            text-align: center;
+            background-color: #fff3cd;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #ffb703;
+            padding: 20px;
+            color: white;
+        }
+
+        header h1 {
+            font-size: 3rem;
+            margin: 0;
+        }
+
+        main {
+            padding: 20px;
+        }
+
+        p {
+            font-size: 1.3rem;
+            color: #444;
+        }
+
+        #birthday-message {
+            font-size: 1.5rem;
+            color: #ff6b6b;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        img {
+            max-width: 300px;
+            border-radius: 15px;
+        }
+
+        button {
+            margin: 10px;
+            padding: 12px 25px;
+            font-size: 16px;
+            border: 2px solid #000;
+            border-radius: 10px;
+            background-color: #ffb703;
+            color: white;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background-color: #fb8500;
+            transform: scale(1.05);
+        }
+
+        .popup {
+            display: none;
+            position: fixed;
+            inset: 0;
+            justify-content: center;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .popup-content {
+            background: white;
+            padding: 25px;
+            border-radius: 20px;
+            max-width: 500px;
+            width: 80%;
+            box-shadow: 0 0 20px rgba(0,0,0,0.2);
+        }
+
+        .popup-content p {
+            font-size: 1.4rem;
+            color: #333;
+        }
+
+        .popup-content img {
+            width: 200px;
+            margin-top: 10px;
+        }
+
+        footer {
+            margin-top: 30px;
+            color: #666;
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>🎂 Happy Birthday! 🎉</h1>
+    </header>
+
+    <main>
+
+        <h2 id="birthday-message">
+            Wishing You the Happiest Birthday Ever!
+        </h2>
+
+        <p>
+            Today is all about celebrating you! 🎈<br>
+            May your day be filled with laughter, happiness,
+            delicious cake, wonderful memories, and all the things
+            that make you smile.
+        </p>
+
+        <img src="https://media.tenor.com/4G6A3mVb9S4AAAAi/happy-birthday.gif"
+            alt="Birthday GIF">
+
+        <br><br>
+
+        <button onclick="showCelebration()">
+            🎉 Celebrate!
+        </button>
+
+        <button onclick="showGift()">
+            🎁 Open Gift
+        </button>
+
+        <!-- Celebration Popup -->
+        <div class="popup" id="celebrationPopup">
+            <div class="popup-content">
+                <p>
+                    🎂 Happy Birthday! 🎂<br><br>
+                    May this year bring you endless opportunities,
+                    success, happiness, and unforgettable adventures!
+                </p>
+
+                <img src="https://media.tenor.com/j3hQ4vM4jLAAAAAi/happy-birthday-cake.gif"
+                    alt="Birthday Cake">
+
+                <br><br>
+
+                <button onclick="closePopup('celebrationPopup')">
+                    Close
+                </button>
+            </div>
+        </div>
+
+        <!-- Gift Popup -->
+        <div class="popup" id="giftPopup">
+            <div class="popup-content">
+                <p>
+                    🎁 Surprise Gift! 🎁<br><br>
+                    You are appreciated more than you know.
+                    Keep being amazing and never stop shining!
+                </p>
+
+                <img src="https://media.tenor.com/HJTXKCtOYwgAAAAi/bubu-dudu.gif"
+                    alt="Gift GIF">
+
+                <br><br>
+
+                <button onclick="closePopup('giftPopup')">
+                    Thank You!
+                </button>
+            </div>
+        </div>
+
+    </main>
+
+    <footer>
+        Made with ❤️ especially for your birthday.
+    </footer>
+
+    <script>
+
+        function showCelebration() {
+            document.getElementById("celebrationPopup").style.display = "flex";
+        }
+
+        function showGift() {
+            document.getElementById("giftPopup").style.display = "flex";
+        }
+
+        function closePopup(id) {
+            document.getElementById(id).style.display = "none";
+        }
+
+        const birthdayMessages = [
+            "🎈 Have an amazing day!",
+            "🎂 Eat lots of cake!",
+            "🎁 Enjoy every moment!",
+            "🎉 Today is all about YOU!",
+            "✨ Wishing you happiness and success!"
+        ];
+
+        let index = 0;
+
+        setInterval(() => {
+            document.getElementById("birthday-message").textContent =
+                birthdayMessages[index];
+
+            index = (index + 1) % birthdayMessages.length;
+        }, 2500);
+
+    </script>
+
+</body>
+</html>
+```
