@@ -1,219 +1,176 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🎂 Happy Birthday! 🎉</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday!</title>
 
-    <link href="https://fonts.cdnfonts.com/css/romantic" rel="stylesheet">
+<style>
+body{
+    margin:0;
+    font-family:Arial, sans-serif;
+    background:linear-gradient(to bottom,#a1c4fd,#fbc2eb);
+    text-align:center;
+    overflow:hidden;
+}
 
-    <style>
-        @import url('https://fonts.cdnfonts.com/css/romantic');
+h1{
+    margin-top:30px;
+    color:#ff4081;
+}
 
-        body {
-            font-family: 'Romantic', sans-serif;
-            text-align: center;
-            background-color: #fff3cd;
-            margin: 0;
-            padding: 0;
-        }
+#instruction{
+    margin-top:10px;
+    color:#333;
+}
 
-        header {
-            background-color: #ffb703;
-            padding: 20px;
-            color: white;
-        }
+#balloon-container{
+    margin-top:40px;
+}
 
-        header h1 {
-            font-size: 3rem;
-            margin: 0;
-        }
+.balloon{
+    font-size:50px;
+    cursor:pointer;
+    display:inline-block;
+    margin:10px;
+    transition:transform .2s;
+}
 
-        main {
-            padding: 20px;
-        }
+.balloon:hover{
+    transform:scale(1.2);
+}
 
-        p {
-            font-size: 1.3rem;
-            color: #444;
-        }
+#message-card{
+    display:none;
+    margin:40px auto;
+    background:white;
+    width:80%;
+    max-width:500px;
+    padding:25px;
+    border-radius:15px;
+    box-shadow:0 10px 20px rgba(0,0,0,.2);
+}
 
-        #birthday-message {
-            font-size: 1.5rem;
-            color: #ff6b6b;
-            margin-bottom: 20px;
-            font-weight: bold;
-        }
+#message-card h2{
+    color:#ff4081;
+}
 
-        img {
-            max-width: 300px;
-            border-radius: 15px;
-        }
+#confetti{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    pointer-events:none;
+    overflow:hidden;
+}
 
-        button {
-            margin: 10px;
-            padding: 12px 25px;
-            font-size: 16px;
-            border: 2px solid #000;
-            border-radius: 10px;
-            background-color: #ffb703;
-            color: white;
-            cursor: pointer;
-            transition: 0.3s;
-        }
+.piece{
+    position:absolute;
+    width:8px;
+    height:8px;
+    background:red;
+    animation:fall 3s linear forwards;
+}
 
-        button:hover {
-            background-color: #fb8500;
-            transform: scale(1.05);
-        }
+@keyframes fall{
+    from{transform:translateY(-10px) rotate(0);}
+    to{transform:translateY(100vh) rotate(360deg);}
+}
 
-        .popup {
-            display: none;
-            position: fixed;
-            inset: 0;
-            justify-content: center;
-            align-items: center;
-            background: rgba(0, 0, 0, 0.5);
-        }
-
-        .popup-content {
-            background: white;
-            padding: 25px;
-            border-radius: 20px;
-            max-width: 500px;
-            width: 80%;
-            box-shadow: 0 0 20px rgba(0,0,0,0.2);
-        }
-
-        .popup-content p {
-            font-size: 1.4rem;
-            color: #333;
-        }
-
-        .popup-content img {
-            width: 200px;
-            margin-top: 10px;
-        }
-
-        footer {
-            margin-top: 30px;
-            color: #666;
-            font-size: 14px;
-        }
-    </style>
+button{
+    margin-top:20px;
+    padding:10px 20px;
+    border:none;
+    border-radius:10px;
+    background:#ff4081;
+    color:white;
+    cursor:pointer;
+}
+</style>
 </head>
 
 <body>
 
-    <header>
-        <h1>🎂 Happy Birthday! 🎉</h1>
-    </header>
+<h1>🎉 Happy Birthday! 🎉</h1>
+<p id="instruction">Pop all the balloons to reveal your surprise 🎈</p>
 
-    <main>
+<div id="balloon-container">
+    <span class="balloon" onclick="popBalloon(this)">🎈</span>
+    <span class="balloon" onclick="popBalloon(this)">🎈</span>
+    <span class="balloon" onclick="popBalloon(this)">🎈</span>
+    <span class="balloon" onclick="popBalloon(this)">🎈</span>
+    <span class="balloon" onclick="popBalloon(this)">🎈</span>
+</div>
 
-        <h2 id="birthday-message">
-            Wishing You the Happiest Birthday Ever!
-        </h2>
+<div id="message-card">
+    <h2>🎂 Happy Birthday!</h2>
+    <p>
+        Hope you have an amazing day filled with laughter, good food,
+        and great memories. You deserve all the happiness today and always!
+    </p>
+    <p>
+        Thanks for being a great friend. Stay awesome! 🎉
+    </p>
 
-        <p>
-            Today is all about celebrating you! 🎈<br>
-            May your day be filled with laughter, happiness,
-            delicious cake, wonderful memories, and all the things
-            that make you smile.
-        </p>
+    <button onclick="resetPage()">Play Again</button>
+</div>
 
-        <img src="https://media.tenor.com/4G6A3mVb9S4AAAAi/happy-birthday.gif"
-            alt="Birthday GIF">
+<div id="confetti"></div>
 
-        <br><br>
+<script>
 
-        <button onclick="showCelebration()">
-            🎉 Celebrate!
-        </button>
+let popped = 0;
 
-        <button onclick="showGift()">
-            🎁 Open Gift
-        </button>
+function popBalloon(el){
+    el.style.opacity = "0";
+    el.style.transform = "scale(0)";
+    el.style.pointerEvents = "none";
 
-        <!-- Celebration Popup -->
-        <div class="popup" id="celebrationPopup">
-            <div class="popup-content">
-                <p>
-                    🎂 Happy Birthday! 🎂<br><br>
-                    May this year bring you endless opportunities,
-                    success, happiness, and unforgettable adventures!
-                </p>
+    popped++;
 
-                <img src="https://media.tenor.com/j3hQ4vM4jLAAAAAi/happy-birthday-cake.gif"
-                    alt="Birthday Cake">
+    if(popped === 5){
+        showMessage();
+    }
+}
 
-                <br><br>
+function showMessage(){
+    document.getElementById("message-card").style.display = "block";
+    document.getElementById("instruction").textContent = "🎉 Surprise Unlocked!";
+    createConfetti();
+}
 
-                <button onclick="closePopup('celebrationPopup')">
-                    Close
-                </button>
-            </div>
-        </div>
+function createConfetti(){
 
-        <!-- Gift Popup -->
-        <div class="popup" id="giftPopup">
-            <div class="popup-content">
-                <p>
-                    🎁 Surprise Gift! 🎁<br><br>
-                    You are appreciated more than you know.
-                    Keep being amazing and never stop shining!
-                </p>
+    const confetti = document.getElementById("confetti");
 
-                <img src="https://media.tenor.com/HJTXKCtOYwgAAAAi/bubu-dudu.gif"
-                    alt="Gift GIF">
+    for(let i = 0; i < 80; i++){
 
-                <br><br>
+        let piece = document.createElement("div");
+        piece.classList.add("piece");
 
-                <button onclick="closePopup('giftPopup')">
-                    Thank You!
-                </button>
-            </div>
-        </div>
+        piece.style.left = Math.random() * 100 + "vw";
+        piece.style.background = getRandomColor();
+        piece.style.animationDuration = (2 + Math.random() * 2) + "s";
 
-    </main>
+        confetti.appendChild(piece);
 
-    <footer>
-        Made with ❤️ especially for your birthday.
-    </footer>
+        setTimeout(() => {
+            piece.remove();
+        }, 4000);
+    }
+}
 
-    <script>
+function getRandomColor(){
+    const colors = ["#ff4081","#ffeb3b","#4caf50","#2196f3","#ff5722"];
+    return colors[Math.floor(Math.random() * colors.length)];
+}
 
-        function showCelebration() {
-            document.getElementById("celebrationPopup").style.display = "flex";
-        }
+function resetPage(){
+    location.reload();
+}
 
-        function showGift() {
-            document.getElementById("giftPopup").style.display = "flex";
-        }
-
-        function closePopup(id) {
-            document.getElementById(id).style.display = "none";
-        }
-
-        const birthdayMessages = [
-            "🎈 Have an amazing day!",
-            "🎂 Eat lots of cake!",
-            "🎁 Enjoy every moment!",
-            "🎉 Today is all about YOU!",
-            "✨ Wishing you happiness and success!"
-        ];
-
-        let index = 0;
-
-        setInterval(() => {
-            document.getElementById("birthday-message").textContent =
-                birthdayMessages[index];
-
-            index = (index + 1) % birthdayMessages.length;
-        }, 2500);
-
-    </script>
+</script>
 
 </body>
 </html>
